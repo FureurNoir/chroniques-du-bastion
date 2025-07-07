@@ -1,0 +1,87 @@
+index.html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Les Chroniques du Bastion</title>
+  <style>
+    body {
+      background-color: #0b0b0b;
+      color: #f5f5f5;
+      font-family: 'Georgia', serif;
+      margin: 0;
+      padding: 2em;
+      line-height: 1.7;
+      user-select: none;
+      overflow: hidden;
+    }
+
+    h1, h2 {
+      color: #e53935;
+      text-align: center;
+    }
+
+    .chapter {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2em;
+      background-color: #1a1a1a;
+      border: 1px solid #333;
+      box-shadow: 0 0 10px rgba(229, 57, 53, 0.5);
+    }
+
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #0b0b0b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #e53935;
+      font-size: 1.5em;
+      z-index: 9999;
+    }
+  </style>
+  <script>
+    // Anti-clic droit et raccourcis classiques
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', function(e) {
+      const blocked = ['u','s','c','x','a','p','i','j','k','e'];
+      if (e.ctrlKey && blocked.includes(e.key.toLowerCase())) {
+        e.preventDefault();
+      }
+      if (e.key === 'F12') e.preventDefault();
+    });
+
+    // Désactivation des outils de dev avec détection console
+    let checkDevTools = () => {
+      const threshold = 160;
+      let start = new Date();
+      debugger;
+      let end = new Date();
+      if (end - start > threshold) window.location.href = 'about:blank';
+    };
+    setInterval(checkDevTools, 1000);
+
+    // Chiffrement de base du contenu (base64 encodé)
+    const encodedContent = "PGRpdiBjbGFzcz1cImNoYXB0ZXJcIj4KICA8aDE+TGVzIENocm9uaXF1ZXMgZHUgQmFzdGlvbjwvaDE+CiAgPGgyPlNhaXNvbiBJIICQIMOgcmUgZHUgSnVnZW1lbnQ8L2gyPgogIDxwPjxzdHJvbmc+Q2hhcGl0cmUgSSDDoCAgTGVzIE9yaWdpbmVzIGR1IEJhc3Rpb248L3N0cm9uZz48L3A+CiAgPHAgPlRleHRlIGRlIGwnaW50cm9kdWN0aW9uIGljaS4uLiAocmVtcGxhY2UgYXZlYyB0b24gY29udGVudSBuYXJyYXRpZik8L3A+CiAgPHAgPkxlIGZldSwgbGVzIGNlbmRyZXMsIGxhIGRvdWxldXIsIGV0IGwnb3JkcmUgZW4gZ2VzdGF0aW9uLi4uIExlIEJhc3Rpb24gbmUgbmFxdWl0IHBhcyBk4oCZdW4gZHLDqXZlLCBtYWlzIGQndW4gY3JpLiBDZWx1aSBk4oCZdW4gbW9uZGUgYnJpc8OpIHF1aSBjaW5xIGfDqW1lcyBhbWVzIGZvcmdlcmVudCBsZXMgbG9pcyBkYW5zIGxlIHNhbmcgZXQgbGEgZm9pLiA8L3A+CiAgPHA+WlsuLi5dPC9wPgo8L2Rpdj4=";
+    function decodeBase64(str) {
+      return decodeURIComponent(escape(window.atob(str)));
+    }
+    window.onload = () => {
+      const loader = document.getElementById('loader');
+      const container = document.getElementById('content');
+      container.innerHTML = decodeBase64(encodedContent);
+      loader.style.display = 'none';
+    };
+  </script>
+</head>
+<body>
+  <div id="loader" class="loader">Chargement sécurisé...</div>
+  <div id="content"></div>
+</body>
+</html>
